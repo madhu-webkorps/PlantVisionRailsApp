@@ -1,0 +1,60 @@
+<div class="container">
+  <h1>All Documents</h1>
+  <p class="description">View previously uploaded and analyzed documents.</p>
+
+  <div class="upload-button-container">
+    <%= link_to "Upload New Document", new_seed_analysis_path, class: "btn-upload" %>
+  </div>
+
+  <% columns = {
+    "Name" => "name",
+    "Scientific Name" => "scientific_name",
+    "Quality" => "quality",
+    "Status" => "status",
+    "Created At" => "created_at"
+  } %>
+
+  <% if @seeds.any? %>
+    <table class="table table-custom">
+      <thead>
+        <tr>
+          <% columns.each do |label, field| %>
+            <th class="sortable-header">
+              <%= link_to "#{label} #{field == params[:sort] ? (params[:direction] == 'asc' ? '↑' : '↓') : ''}".html_safe,
+                  seed_analyses_path(sort: field, direction: params[:sort] == field && params[:direction] == "asc" ? "desc" : "asc"),
+                  class: "sortable-link" %>
+            </th>
+          <% end %>
+          <th class="actions-header">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @seeds.each do |seed| %>
+          <tr>
+            <td class="cell-center">
+              <%= link_to seed.name.presence || "Untitled", seed_analysis_path(seed), class: "doc-link" %>
+            </td>
+            <td class="cell-center"><%= seed.scientific_name.presence || "N/A" %></td>
+            <td class="cell-center"><%= seed.quality.presence || "Unknown" %></td>
+            <td class="cell-center"><%= seed.status&.capitalize || "Unknown" %></td>
+            <td class="cell-center"><%= seed.created_at.strftime("%d %b %Y") %></td>
+            <td class="cell-center">
+              <%= link_to seed_analysis_path(seed), title: "View", class: "icon-link text-primary" do %>
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              <% end %>
+             <%= button_to seed_analysis_path(seed),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: "btn btn-link text-danger",
+                form: { style: "display: inline" } do %>
+                <i class="fas fa-trash-alt" aria-hidden="true"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No documents uploaded yet.</p>
+  <% end %>
+</div>

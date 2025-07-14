@@ -30,9 +30,19 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
-
+gem 'sidekiq'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+gem "bootstrap", "~> 5.3.3"
+gem "sassc-rails"
+gem "annotaterb", "~> 4.14"
+gem "dotenv-rails", "~> 3.1"
+gem "enumerize", "~> 2.8"
+gem "httparty", "~> 0.23.1"
+gem "mini_magick"
+gem "image_processing", require: false
+gem "redis", "~> 5.4"
+# gem "combine_pdf", "~> 1.0"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -43,6 +53,7 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem 'pry'
 end
 
 group :development do

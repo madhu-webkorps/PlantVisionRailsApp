@@ -1,0 +1,68 @@
+<div class="container">
+  <% if @seed.status != "completed" %>
+    <!-- Loader UI -->
+    <div style="text-align: center; margin-top: 100px;">
+      <p style="font-size: 16px; margin-bottom: 20px;">Analyzing seed... Please wait.</p>
+      <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+
+    <script>
+      setTimeout(() => {
+        location.reload();
+      }, 5000);
+    </script>
+
+  <% elsif @seed.error.present? %>
+    <!-- Show error message only -->
+    <div style="margin-top: 60px; text-align: center;">
+      <h2 style="color: #e53935;">Analysis Failed</h2>
+      <p style="font-size: 16px; color: #555;"><%= @seed.error %></p>
+
+      <%= link_to seed_analyses_path, style: "margin-top: 30px; display: inline-block; text-decoration: none; background: #5252fa; border-radius: 5px; padding: 13px 20px; color: white;" do %>
+        <i class="fas fa-arrow-left"></i> &nbsp;Back to All Documents
+      <% end %>
+    </div>
+
+  <% else %>
+    <!-- Main content shown after processing -->
+    <h1 style="font-size: 28px;">Seed Name: <%= @seed.name.presence || "Untitled" %></h1>
+
+    <p style="color: #555;">
+      <strong>Status:</strong> <%= @seed.status.capitalize %>
+    </p>
+
+    <div class="seed-details-card" style="display: flex; gap: 40px; margin-top: 20px; align-items: flex-start; flex-wrap: wrap;">
+      <!-- Left Column: Details -->
+      <div style="flex: 1; min-width: 250px;">
+        <h2 class="seed-details-heading">Seed Details</h2>
+        <ul class="seed-details-list" style="list-style: none; padding-left: 0;">
+          <li><strong>Name:</strong> <%= @seed.name.presence || "N/A" %></li>
+          <li><strong>Scientific Name:</strong> <%= @seed.scientific_name.presence || "N/A" %></li>
+          <li><strong>Quality:</strong> <%= @seed.quality.presence || "Unknown" %></li>
+          <li><strong>Description:</strong> <%= @seed.description.presence || "N/A" %></li>
+          <li><strong>Nutritional Benefits:</strong> <%= @seed.nutritional_benefits.presence || "N/A" %></li>
+          <li><strong>Medicinal Benefits:</strong> <%= @seed.medicinal_benefits.presence || "N/A" %></li>
+          <% if @seed.file.attached? %>
+            <li>
+              <strong>Seed File:</strong>
+              <%= link_to @seed.file.filename.to_s, rails_blob_path(@seed.file, disposition: "attachment"), class: "seed-file-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- Right Column: Image -->
+      <% if @seed.file.attached? && @seed.file.image? %>
+        <div style="flex-shrink: 0;">
+          <div style="max-width: 220px; max-height: 220px; border-radius: 8px; overflow: hidden; border: 1px solid #ddd;">
+            <%= image_tag @seed.file.variant(resize_to_limit: [220, 220]), style: "width: 100%; height: auto;" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <%= link_to seed_analyses_path, style: "margin-top: 30px; display: inline-block; text-decoration: none; background: #5252fa; border-radius: 5px; padding: 13px 20px; color: white;" do %>
+      <i class="fas fa-arrow-left"></i> &nbsp;Back to All Documents
+    <% end %>
+  <% end %>
+</div>

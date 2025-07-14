@@ -1,0 +1,16 @@
+<div class="container mt-5">
+  <h1 class="mb-3">Seed Analysis</h1>
+  <p class="text-muted mb-4">Upload a seed image or PDF to let our AI identify it and provide useful details.</p>
+
+  <%= form_with model: @seed, url: seed_analyses_path, local: true, html: { multipart: true, class: "needs-validation" } do |form| %>
+    <div class="mb-3">
+      <%= form.label :file, "Seed Image or PDF", class: "form-label" %>
+      <%= form.file_field :file, class: "form-control", id: "seed_file_input" %>
+    </div>
+
+    <div class="d-flex gap-3 mt-4">
+      <%= form.submit "Analyze Seed", class: "btn btn-primary", id: "analyze_button", disabled: true %>
+      <%= link_to "Cancel", seed_analyses_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>

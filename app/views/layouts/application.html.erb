@@ -13,11 +13,23 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <script src="https://kit.fontawesome.com/2d6399573c.js" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <%= yield %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("seed_file_input");
+        const submitButton = document.getElementById("analyze_button");
+
+        fileInput.addEventListener("change", function () {
+          submitButton.disabled = !fileInput.files.length;
+        });
+      });
+    </script>
+
   </body>
 </html>
