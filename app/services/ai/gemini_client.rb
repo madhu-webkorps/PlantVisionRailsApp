@@ -43,7 +43,7 @@ module Ai
     def seed_prompt
       <<~PROMPT
         You are a seed identification expert. Based on the uploaded file, identify the seed,
-        provide its name and scientific name, nutritional and medicinal benefits, seed quality, and a detailed description.
+        provide its name and scientific name, nutritional and medicinal benefits, seed quality (good, bad, or unknown), and a detailed description.
         Return the answer in a structured JSON format.
 
         If the uploaded image is not a valid seed image, return:
