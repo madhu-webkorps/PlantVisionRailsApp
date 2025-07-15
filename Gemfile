@@ -35,7 +35,7 @@ gem 'sidekiq'
 # gem "image_processing", "~> 1.2"
 gem "bootstrap", "~> 5.3.3"
 gem "sassc-rails"
-gem "annotaterb", "~> 4.14"
+gem "annotaterb", "~> 4.17"
 gem "dotenv-rails", "~> 3.1"
 gem "enumerize", "~> 2.8"
 gem "httparty", "~> 0.23.1"
